@@ -1,0 +1,795 @@
+﻿<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>El auténtico jurado popular</title>
+<style>
+
+    :root {
+        --primary: #2563eb;
+        --secondary: #7c3aed;
+        --header-background: linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%);
+        --surface: #ffffff;
+        --surface-accent: #f8fafc;
+        --text: #111827;
+        --text-secondary: #4b5563;
+        --text-on-header: #f3f4f6;
+        --border: #e5e7eb;
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --header-background: linear-gradient(135deg, #1e1b4b 0%, #2e1065 100%);
+            --surface: #1a1a1a;
+            --surface-accent: #2d2d2d;
+            --text: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-on-header: #e5e7eb;
+            --border: #374151;
+        }
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 180px;
+    }
+    
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: var(--surface);
+        color: var(--text);
+        line-height: 1.6;
+    }
+    
+    .cabecera-unificada {
+        background: var(--header-background);
+        color: var(--text-on-header);
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    .contenido-cabecera {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 1rem;
+    }
+    
+    .titulo-principal {
+        font-size: 2.75rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(45deg, #93c5fd, #c4b5fd);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .menu-principal {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+        padding-bottom: 0.5rem;
+        overflow-x: auto;
+    }
+    
+    .opcion-menu {
+        color: var(--text-on-header);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        position: relative;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+    
+    .opcion-menu::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--text-on-header);
+        transition: width 0.3s ease;
+    }
+    
+    .opcion-menu:hover::after {
+        width: 100%;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 220px auto 2rem;
+        padding: 0 1rem;
+    }
+    
+    .categoria {
+        margin-bottom: 3rem;
+        scroll-margin-top: 20px;
+    }
+    
+    .categoria-header {
+        background: var(--surface-accent);
+        padding: 1.5rem;
+        border-radius: 0.75rem 0.75rem 0 0;
+        margin-bottom: 0;
+        border-bottom: 2px solid var(--primary);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .categoria-header h2 {
+        color: var(--primary);
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        margin: 0;
+    }
+    
+    .stats-badge {
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    .table-wrapper {
+        background: var(--surface);
+        border-radius: 0 0 0.75rem 0.75rem;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+    
+    th {
+        background: var(--surface-accent);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        color: var(--primary);
+        padding: 1.25rem 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    td {
+        padding: 1rem;
+        color: var(--text-secondary);
+    }
+    
+    tr:not(:last-child) td {
+        border-bottom: 1px solid var(--border);
+    }
+    
+    tr:hover {
+        background: color-mix(in srgb, var(--primary) 8%, transparent);
+    }
+    
+    .orden {
+        font-weight: 600;
+        color: var(--primary);
+        width: 4rem;
+        text-align: center;
+    }
+    
+    .visitas {
+        font-family: 'SF Mono', 'Cascadia Code', Consolas, monospace;
+        color: var(--primary);
+        font-weight: 500;
+    }
+    
+    .factor {
+        font-family: 'SF Mono', 'Cascadia Code', Consolas, monospace;
+        color: var(--secondary);
+        font-weight: 500;
+    }
+    
+    .agrupacion-link {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+    
+    .agrupacion-link:hover {
+        color: var(--primary);
+    }
+    
+    .fase {
+        font-size: 0.875rem;
+    }
+    
+    @media (max-width: 768px) {
+        .contenido-cabecera {
+            padding: 1rem;
+        }
+        
+        .titulo-principal {
+            font-size: 2rem;
+        }
+        
+        .menu-principal {
+            gap: 1rem;
+        }
+        
+        .container {
+            margin-top: 160px;
+            padding: 0 0.5rem;
+        }
+        
+        .categoria-header {
+            padding: 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .stats-badge {
+            align-self: flex-end;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+        }
+    }
+    
+</style>
+</head>
+<body>
+<header class='cabecera-unificada'>
+<div class='contenido-cabecera'>
+<h1 class='titulo-principal'>El auténtico jurado popular</h1>
+<p style='color: var(--text-on-header); opacity: 0.9;'>01/02/2025 20:15</p>
+<nav class='menu-principal'>
+<a href='#modalidad_chirigota' class='opcion-menu'>Chirigota</a>
+<a href='#modalidad_comparsa' class='opcion-menu'>Comparsa</a>
+<a href='#modalidad_coro' class='opcion-menu'>Coro</a>
+<a href='#modalidad_cuarteto' class='opcion-menu'>Cuarteto</a>
+</nav>
+</div>
+</header>
+<div class='container'>
+<section id='modalidad_chirigota' class='categoria'>
+<div class='categoria-header'>
+<h2>Chirigota</h2>
+<span class='stats-badge'>22 videos</span>
+</div>
+<div class='table-wrapper'>
+<table>
+<thead>
+<tr>
+<th class='orden'>#</th>
+<th>Agrupación</th>
+<th>Fase</th>
+<th>Visitas</th>
+<th>Factor V/H</th>
+<th>Publicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='orden'>1</td>
+<td><a href='https://www.youtube.com/watch?v=JrgnnwCIj8g' target='_blank' class='agrupacion-link'>Comparsa Los Calaíta (Fuimos a por tabaco) una chirigota de toda la vida...</a></td>
+<td class='fase'>Preliminar</td>
+<td class='visitas'>311.338</td>
+<td class='factor'>1647,09</td>
+<td class='fase'>24/01 23:13</td>
+</tr>
+<tr>
+<td class='orden'>2</td>
+<td><a href='https://www.youtube.com/watch?v=4A44HlY0hIQ' target='_blank' class='agrupacion-link'>Los muchachos del congelao</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>270.158</td>
+<td class='factor'>1618,52</td>
+<td class='fase'>25/01 21:20</td>
+</tr>
+<tr>
+<td class='orden'>3</td>
+<td><a href='https://www.youtube.com/watch?v=Jy0YXF0kJWo' target='_blank' class='agrupacion-link'>Los pimpinelas de La Plaza Fragela</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>210.422</td>
+<td class='factor'>1270,29</td>
+<td class='fase'>25/01 22:36</td>
+</tr>
+<tr>
+<td class='orden'>4</td>
+<td><a href='https://www.youtube.com/watch?v=aFanpPSpwAE' target='_blank' class='agrupacion-link'>Por si acaso .... Las precavidas</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>171.000</td>
+<td class='factor'>1470,87</td>
+<td class='fase'>27/01 23:59</td>
+</tr>
+<tr>
+<td class='orden'>5</td>
+<td><a href='https://www.youtube.com/watch?v=-q5IM2YXSIY' target='_blank' class='agrupacion-link'>Cariño.... qué pelusilla me tienes</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>167.017</td>
+<td class='factor'>787,03</td>
+<td class='fase'>24/01 00:02</td>
+</tr>
+<tr>
+<td class='orden'>6</td>
+<td><a href='https://www.youtube.com/watch?v=uqp1tNqwpzk' target='_blank' class='agrupacion-link'>Que sea lo que Dios quiera</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>144.458</td>
+<td class='factor'>1552,46</td>
+<td class='fase'>28/01 23:12</td>
+</tr>
+<tr>
+<td class='orden'>7</td>
+<td><a href='https://www.youtube.com/watch?v=NbYS5gt5C2c' target='_blank' class='agrupacion-link'>Cuando tú vas yo vengo</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>138.739</td>
+<td class='factor'>723,90</td>
+<td class='fase'>24/01 20:35</td>
+</tr>
+<tr>
+<td class='orden'>8</td>
+<td><a href='https://www.youtube.com/watch?v=yBPUaFZRUyU' target='_blank' class='agrupacion-link'>Los hermanos del buen fin</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>102.890</td>
+<td class='factor'>4893,48</td>
+<td class='fase'>31/01 23:13</td>
+</tr>
+<tr>
+<td class='orden'>9</td>
+<td><a href='https://www.youtube.com/watch?v=oIB6AMdRXBU' target='_blank' class='agrupacion-link'>Los inhumanos</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>101.790</td>
+<td class='factor'>534,31</td>
+<td class='fase'>24/01 21:44</td>
+</tr>
+<tr>
+<td class='orden'>10</td>
+<td><a href='https://www.youtube.com/watch?v=NRjUi8DtCM0' target='_blank' class='agrupacion-link'>Los turistas se la dan de artistas (Los urbanitas)</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>45.179</td>
+<td class='factor'>211,66</td>
+<td class='fase'>23/01 22:48</td>
+</tr>
+<tr>
+<td class='orden'>11</td>
+<td><a href='https://www.youtube.com/watch?v=mY7ti1A7pZk' target='_blank' class='agrupacion-link'>Los cabecita loca</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>43.117</td>
+<td class='factor'>200,80</td>
+<td class='fase'>23/01 21:31</td>
+</tr>
+<tr>
+<td class='orden'>12</td>
+<td><a href='https://www.youtube.com/watch?v=lW8N64VhFNA' target='_blank' class='agrupacion-link'>5 minutitos más</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>42.696</td>
+<td class='factor'>359,80</td>
+<td class='fase'>27/01 21:35</td>
+</tr>
+<tr>
+<td class='orden'>13</td>
+<td><a href='https://www.youtube.com/watch?v=wOIjXmMTco0' target='_blank' class='agrupacion-link'>Los cenadores rumanos</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>40.072</td>
+<td class='factor'>285,66</td>
+<td class='fase'>26/01 23:58</td>
+</tr>
+<tr>
+<td class='orden'>14</td>
+<td><a href='https://www.youtube.com/watch?v=puZXJ3rvjb0' target='_blank' class='agrupacion-link'>Cádiz de la frontera</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>33.109</td>
+<td class='factor'>481,25</td>
+<td class='fase'>29/01 23:27</td>
+</tr>
+<tr>
+<td class='orden'>15</td>
+<td><a href='https://www.youtube.com/watch?v=HHyq1aIbztk' target='_blank' class='agrupacion-link'>Los que tienen el cielo ganao</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>32.384</td>
+<td class='factor'>716,04</td>
+<td class='fase'>30/01 23:01</td>
+</tr>
+<tr>
+<td class='orden'>16</td>
+<td><a href='https://www.youtube.com/watch?v=UROmJLx3zGM' target='_blank' class='agrupacion-link'>Los Malfo</a></td>
+<td class='fase'>llados (una fucking chirigota)</td>
+<td class='visitas'>30.437</td>
+<td class='factor'>213,17</td>
+<td class='fase'>26/01 21:28</td>
+</tr>
+<tr>
+<td class='orden'>17</td>
+<td><a href='https://www.youtube.com/watch?v=Czd335guXEY' target='_blank' class='agrupacion-link'>Voces esmayadas</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>28.934</td>
+<td class='factor'>306,17</td>
+<td class='fase'>28/01 21:45</td>
+</tr>
+<tr>
+<td class='orden'>18</td>
+<td><a href='https://www.youtube.com/watch?v=Ac4tInxaGgc' target='_blank' class='agrupacion-link'>Que de gente muere por Cai</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>24.670</td>
+<td class='factor'>347,72</td>
+<td class='fase'>29/01 21:18</td>
+</tr>
+<tr>
+<td class='orden'>19</td>
+<td><a href='https://www.youtube.com/watch?v=WChd6fuw47w' target='_blank' class='agrupacion-link'>Las anticuarias</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>21.556</td>
+<td class='factor'>131,29</td>
+<td class='fase'>26/01 00:03</td>
+</tr>
+<tr>
+<td class='orden'>20</td>
+<td><a href='https://www.youtube.com/watch?v=e4DXpMJuAJw' target='_blank' class='agrupacion-link'>Los auténticos pitorrisas</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>18.426</td>
+<td class='factor'>156,76</td>
+<td class='fase'>27/01 22:42</td>
+</tr>
+<tr>
+<td class='orden'>21</td>
+<td><a href='https://www.youtube.com/watch?v=PlTri6krExg' target='_blank' class='agrupacion-link'>Una chirigota grande</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>14.784</td>
+<td class='factor'>104,39</td>
+<td class='fase'>26/01 22:38</td>
+</tr>
+<tr>
+<td class='orden'>22</td>
+<td><a href='https://www.youtube.com/watch?v=JyOEhWiAbgE' target='_blank' class='agrupacion-link'>Martín el encantador</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>12.702</td>
+<td class='factor'>273,61</td>
+<td class='fase'>30/01 21:49</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id='modalidad_comparsa' class='categoria'>
+<div class='categoria-header'>
+<h2>Comparsa</h2>
+<span class='stats-badge'>24 videos</span>
+</div>
+<div class='table-wrapper'>
+<table>
+<thead>
+<tr>
+<th class='orden'>#</th>
+<th>Agrupación</th>
+<th>Fase</th>
+<th>Visitas</th>
+<th>Factor V/H</th>
+<th>Publicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='orden'>1</td>
+<td><a href='https://www.youtube.com/watch?v=zpAP3fNLL5Q' target='_blank' class='agrupacion-link'>Las ratas</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>266.203</td>
+<td class='factor'>3825,41</td>
+<td class='fase'>29/01 22:39</td>
+</tr>
+<tr>
+<td class='orden'>2</td>
+<td><a href='https://www.youtube.com/watch?v=A8lJkL3i8vw' target='_blank' class='agrupacion-link'>La tribu</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>235.629</td>
+<td class='factor'>2016,55</td>
+<td class='fase'>27/01 23:24</td>
+</tr>
+<tr>
+<td class='orden'>3</td>
+<td><a href='https://www.youtube.com/watch?v=aGXdeGWhhGk' target='_blank' class='agrupacion-link'>La resistencia</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>114.026</td>
+<td class='factor'>691,20</td>
+<td class='fase'>25/01 23:17</td>
+</tr>
+<tr>
+<td class='orden'>4</td>
+<td><a href='https://www.youtube.com/watch?v=jDpqtKKgO0o' target='_blank' class='agrupacion-link'>El corazón de Cádiz</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>64.614</td>
+<td class='factor'>303,68</td>
+<td class='fase'>23/01 23:29</td>
+</tr>
+<tr>
+<td class='orden'>5</td>
+<td><a href='https://www.youtube.com/watch?v=0-R-zTBYudU' target='_blank' class='agrupacion-link'>Los trastos</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>27.324</td>
+<td class='factor'>126,87</td>
+<td class='fase'>23/01 20:53</td>
+</tr>
+<tr>
+<td class='orden'>6</td>
+<td><a href='https://www.youtube.com/watch?v=8KveZV24teE' target='_blank' class='agrupacion-link'>¡Payaso!</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>23.808</td>
+<td class='factor'>520,13</td>
+<td class='fase'>30/01 22:28</td>
+</tr>
+<tr>
+<td class='orden'>7</td>
+<td><a href='https://www.youtube.com/watch?v=0kjO6-DlttE' target='_blank' class='agrupacion-link'>La mala</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>21.263</td>
+<td class='factor'>112,85</td>
+<td class='fase'>24/01 23:49</td>
+</tr>
+<tr>
+<td class='orden'>8</td>
+<td><a href='https://www.youtube.com/watch?v=4GYG18YrRmM' target='_blank' class='agrupacion-link'>La majadería</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>20.742</td>
+<td class='factor'>466,05</td>
+<td class='fase'>30/01 23:44</td>
+</tr>
+<tr>
+<td class='orden'>9</td>
+<td><a href='https://www.youtube.com/watch?v=CWySBSHLp_Q' target='_blank' class='agrupacion-link'>Las perras</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>20.232</td>
+<td class='factor'>142,28</td>
+<td class='fase'>26/01 22:03</td>
+</tr>
+<tr>
+<td class='orden'>10</td>
+<td><a href='https://www.youtube.com/watch?v=EOy60HKsa_8' target='_blank' class='agrupacion-link'>Cositas de Cádiz</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>19.192</td>
+<td class='factor'>202,01</td>
+<td class='fase'>28/01 21:14</td>
+</tr>
+<tr>
+<td class='orden'>11</td>
+<td><a href='https://www.youtube.com/watch?v=8-dI9BQbh_8' target='_blank' class='agrupacion-link'>Carnavalandia</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>17.320</td>
+<td class='factor'>146,59</td>
+<td class='fase'>27/01 22:06</td>
+</tr>
+<tr>
+<td class='orden'>12</td>
+<td><a href='https://www.youtube.com/watch?v=loEI4Cm17mY' target='_blank' class='agrupacion-link'>La valla</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>15.459</td>
+<td class='factor'>696,59</td>
+<td class='fase'>31/01 22:03</td>
+</tr>
+<tr>
+<td class='orden'>13</td>
+<td><a href='https://www.youtube.com/watch?v=yEm3xyFV__w' target='_blank' class='agrupacion-link'>Los hijos del cañaveral</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>15.026</td>
+<td class='factor'>70,19</td>
+<td class='fase'>23/01 22:10</td>
+</tr>
+<tr>
+<td class='orden'>14</td>
+<td><a href='https://www.youtube.com/watch?v=4r0XfUHYxg0' target='_blank' class='agrupacion-link'>L@s artistas</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>13.775</td>
+<td class='factor'>146,94</td>
+<td class='fase'>28/01 22:30</td>
+</tr>
+<tr>
+<td class='orden'>15</td>
+<td><a href='https://www.youtube.com/watch?v=LmKyqSfJ-ik' target='_blank' class='agrupacion-link'>Los wonderful</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>12.554</td>
+<td class='factor'>65,69</td>
+<td class='fase'>24/01 21:09</td>
+</tr>
+<tr>
+<td class='orden'>16</td>
+<td><a href='https://www.youtube.com/watch?v=dIu5ytkMayI' target='_blank' class='agrupacion-link'>Viaje a la vida</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>12.518</td>
+<td class='factor'>75,23</td>
+<td class='fase'>25/01 21:52</td>
+</tr>
+<tr>
+<td class='orden'>17</td>
+<td><a href='https://www.youtube.com/watch?v=978qwK6t3kM' target='_blank' class='agrupacion-link'>Los gamberros</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>11.936</td>
+<td class='factor'>71,18</td>
+<td class='fase'>25/01 20:33</td>
+</tr>
+<tr>
+<td class='orden'>18</td>
+<td><a href='https://www.youtube.com/watch?v=HizRpCkXkbc' target='_blank' class='agrupacion-link'>Bendita tú eres</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>10.548</td>
+<td class='factor'>74,87</td>
+<td class='fase'>26/01 23:22</td>
+</tr>
+<tr>
+<td class='orden'>19</td>
+<td><a href='https://www.youtube.com/watch?v=WO1Q2HGO3jI' target='_blank' class='agrupacion-link'>Los charlatanes</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>10.450</td>
+<td class='factor'>148,72</td>
+<td class='fase'>29/01 21:59</td>
+</tr>
+<tr>
+<td class='orden'>20</td>
+<td><a href='https://www.youtube.com/watch?v=MYVss1lh_S0' target='_blank' class='agrupacion-link'>Donde los sueños se hacen realidad</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>9.467</td>
+<td class='factor'>102,29</td>
+<td class='fase'>28/01 23:42</td>
+</tr>
+<tr>
+<td class='orden'>21</td>
+<td><a href='https://www.youtube.com/watch?v=zmu25ZqHPf8' target='_blank' class='agrupacion-link'>Las carmelas</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>8.494</td>
+<td class='factor'>416,32</td>
+<td class='fase'>31/01 23:51</td>
+</tr>
+<tr>
+<td class='orden'>22</td>
+<td><a href='https://www.youtube.com/watch?v=mmKh0CHHAD8' target='_blank' class='agrupacion-link'>Los gorriones</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>6.698</td>
+<td class='factor'>98,02</td>
+<td class='fase'>29/01 23:55</td>
+</tr>
+<tr>
+<td class='orden'>23</td>
+<td><a href='https://www.youtube.com/watch?v=fHvCl2FGIeM' target='_blank' class='agrupacion-link'>Los plumeritos</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>6.218</td>
+<td class='factor'>132,19</td>
+<td class='fase'>30/01 21:12</td>
+</tr>
+<tr>
+<td class='orden'>24</td>
+<td><a href='https://www.youtube.com/watch?v=0PhNH5iRQl8' target='_blank' class='agrupacion-link'>El gran comandante</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>3.393</td>
+<td class='factor'>148,27</td>
+<td class='fase'>31/01 21:22</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id='modalidad_coro' class='categoria'>
+<div class='categoria-header'>
+<h2>Coro</h2>
+<span class='stats-badge'>6 videos</span>
+</div>
+<div class='table-wrapper'>
+<table>
+<thead>
+<tr>
+<th class='orden'>#</th>
+<th>Agrupación</th>
+<th>Fase</th>
+<th>Visitas</th>
+<th>Factor V/H</th>
+<th>Publicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='orden'>1</td>
+<td><a href='https://www.youtube.com/watch?v=HjneAoYm8D4' target='_blank' class='agrupacion-link'>Las entrañas de Cádiz</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>12.081</td>
+<td class='factor'>84,21</td>
+<td class='fase'>26/01 20:47</td>
+</tr>
+<tr>
+<td class='orden'>2</td>
+<td><a href='https://www.youtube.com/watch?v=VssvvWfPShM' target='_blank' class='agrupacion-link'>La desafinada</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>6.640</td>
+<td class='factor'>92,94</td>
+<td class='fase'>29/01 20:48</td>
+</tr>
+<tr>
+<td class='orden'>3</td>
+<td><a href='https://www.youtube.com/watch?v=TOiDH7qSm6w' target='_blank' class='agrupacion-link'>La palabra de Dios</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>6.531</td>
+<td class='factor'>54,70</td>
+<td class='fase'>27/01 20:51</td>
+</tr>
+<tr>
+<td class='orden'>4</td>
+<td><a href='https://www.youtube.com/watch?v=ue2mARdz68c' target='_blank' class='agrupacion-link'>Los guardianes del Dios momo</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>6.175</td>
+<td class='factor'>64,58</td>
+<td class='fase'>28/01 20:38</td>
+</tr>
+<tr>
+<td class='orden'>5</td>
+<td><a href='https://www.youtube.com/watch?v=fx5ngIIuSPM' target='_blank' class='agrupacion-link'>Ley natura</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>5.563</td>
+<td class='factor'>117,02</td>
+<td class='fase'>30/01 20:42</td>
+</tr>
+<tr>
+<td class='orden'>6</td>
+<td><a href='https://www.youtube.com/watch?v=DUYp5pCUWqM' target='_blank' class='agrupacion-link'>El Grimorio</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>1.947</td>
+<td class='factor'>82,72</td>
+<td class='fase'>31/01 20:42</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id='modalidad_cuarteto' class='categoria'>
+<div class='categoria-header'>
+<h2>Cuarteto</h2>
+<span class='stats-badge'>2 videos</span>
+</div>
+<div class='table-wrapper'>
+<table>
+<thead>
+<tr>
+<th class='orden'>#</th>
+<th>Agrupación</th>
+<th>Fase</th>
+<th>Visitas</th>
+<th>Factor V/H</th>
+<th>Publicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='orden'>1</td>
+<td><a href='https://www.youtube.com/watch?v=xYWGpd-NnNs' target='_blank' class='agrupacion-link'>Ku klux klan klan</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>133.990</td>
+<td class='factor'>706,18</td>
+<td class='fase'>24/01 22:30</td>
+</tr>
+<tr>
+<td class='orden'>2</td>
+<td><a href='https://www.youtube.com/watch?v=F9xqv32in_A' target='_blank' class='agrupacion-link'>O.N.G.(Organización No Gaditana) Cuartetos sin fronteras</a></td>
+<td class='fase'>Preliminares</td>
+<td class='visitas'>15.983</td>
+<td class='factor'>742,86</td>
+<td class='fase'>31/01 22:44</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</body>
+</html>
