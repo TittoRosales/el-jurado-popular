@@ -175,7 +175,7 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.875rem; /* Reducido el tamaño base */
+    font-size: 0.95rem;
     min-width: 800px;
 }
 
@@ -186,73 +186,148 @@ th {
     font-size: 0.75rem;
     letter-spacing: 0.05em;
     color: var(--primary);
-    padding: 1.25rem 0.75rem; /* Reducido el padding */
+    padding: 1.25rem 1rem;
     border-bottom: 1px solid var(--border);
     position: relative;
     white-space: nowrap;
 }
 
-td {
-    padding: 0.75rem; /* Reducido el padding */
-    color: var(--text-secondary);
-    font-size: 0.8125rem; /* Tamaño base más pequeño */
-    line-height: 1.4;
+th .icono-orden {
+    margin-left: 5px;
+    font-size: 1.1rem;
 }
 
-.agrupacion-link a {
-    font-size: 0.8125rem; /* Igualado al resto */
-    color: inherit;
-    text-decoration: none;
+td {
+    padding: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem; /* Tamaño base para todas las celdas */
+}
+
+tr:not(:last-child) td {
+    border-bottom: 1px solid var(--border);
+}
+
+tr:hover {
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.orden {
+    font-weight: 600;
+    color: var(--primary);
+    width: 4rem;
+    text-align: center;
+}
+
+.visitas {
+    font-family: 'SF Mono', 'Cascadia Code', Consolas, monospace;
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 0.95rem; /* Igualamos el tamaño */
+}
+
+.factor, .puntuacion, .likes, .comments, .publicado, .fase {
+    text-align: center;
+    font-size: 0.95rem; /* Igualamos el tamaño */
+}
+
+.factor {
+    font-family: 'SF Mono', 'Cascadia Code', Consolas, monospace;
+    color: var(--secondary);
     font-weight: 500;
 }
 
-.fase {
-    font-size: 0.8125rem; /* Igualado al resto */
-    text-align: center;
+.agrupacion-link {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
 
-.visitas, .factor, .likes, .comments, .publicado, .puntuacion {
-    font-size: 0.8125rem;
-    text-align: center;
+.agrupacion-link a {
+    font-size: 0.95rem; /* Igualamos el tamaño */
+    color: inherit;
+    text-decoration: none;
+}
+
+.agrupacion-link:hover {
+    color: var(--primary);
 }
 
 @media (max-width: 768px) {
-    table {
-        font-size: 0.8125rem;
+    /* Reducimos el tamaño de la fuente de agrupación y fase */
+    .agrupacion-link a {
+        font-size: 0.5rem;
+        font-weight: 600;
     }
 
-    td, th {
-        padding: 0.625rem 0.5rem; /* Padding más compacto en móvil */
-        font-size: 0.8125rem;
+    .fase {
+        font-size: 0.5rem;
+        color: gray; /* Suavizamos el color para que no destaque tanto */
     }
 
-    .agrupacion-link a,
-    .fase,
-    .visitas,
-    .factor,
-    .likes,
-    .comments,
-    .publicado,
-    .puntuacion {
-        font-size: 0.8125rem;
+    /* Aumentamos un poco los datos numéricos para equilibrar */
+    .visitas, .likes, .comentarios {
+        font-size: 1rem;
     }
 
-    /* Reducir el tamaño del texto de los encabezados en móvil */
-    th {
-        font-size: 0.75rem;
-        white-space: nowrap;
+    /* Mejoramos la alineación y distribución */
+    td {
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+    }
+
+    /* Evitamos que los nombres largos ocupen demasiado */
+    .agrupacion-link {
+        max-width: 80%;
+        white-space: normal;
+        line-height: 1.2;
     }
 }
-
 @media (max-width: 480px) {
-    table {
-        font-size: 0.8125rem;
+    .table-wrapper {
+        overflow-x: hidden;
     }
 
-    td, th {
-        padding: 0.5rem 0.375rem; /* Padding aún más compacto */
+    table {
+        display: block;
+        width: 100%;
     }
-}
+
+    thead {
+        display: none; /* Ocultamos encabezado en móvil */
+    }
+
+    tbody {
+        display: block;
+        width: 100%;
+    }
+
+    tr {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        background: var(--surface-accent);
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    td {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--primary);
+        margin-right: 0.5rem;
+    }
+
+    .orden, .visitas, .factor, .likes, .comments, .fase, .publicado, .puntuacion {
+        text-align: left;
+    }
     
 </style>
 </head>
@@ -260,7 +335,7 @@ td {
 <header class='cabecera-unificada'>
 <div class='contenido-cabecera'>
 <h1 class='titulo-principal'>El auténtico jurado popular</h1>
-<p style='color: var(--text-on-header); opacity: 0.9;'>Actualizado: 02/02/2025 18:43</p>
+<p style='color: var(--text-on-header); opacity: 0.9;'>Actualizado: 02/02/2025 18:44</p>
 <nav class='menu-principal'>
 <a href='#modalidad_chirigota' class='opcion-menu'>Chirigota</a>
 <a href='#modalidad_comparsa' class='opcion-menu'>Comparsa</a>
@@ -296,18 +371,18 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=yBPUaFZRUyU'>Los hermanos del buen fin</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>162.197</td>
-<td class='factor'>89.501</td>
+<td class='factor'>89.452</td>
 <td class='likes'>2.463</td>
 <td class='comments'>305</td>
 <td class='publicado'>1 días, 19 horas</td>
-<td class='puntuacion'>125,71</td>
+<td class='puntuacion'>125,66</td>
 </tr>
 <tr>
 <td>2</td>
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=JrgnnwCIj8g'>Comparsa Los Calaíta (Fuimos a por tabaco) una chirigota de toda la vida...</a></td>
 <td class='fase'>Preliminar</td>
 <td class='visitas'>329.116</td>
-<td class='factor'>37.348</td>
+<td class='factor'>37.344</td>
 <td class='likes'>4.110</td>
 <td class='comments'>449</td>
 <td class='publicado'>8 días, 19 horas</td>
@@ -318,7 +393,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=4A44HlY0hIQ'>Los muchachos del congelao</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>281.448</td>
-<td class='factor'>35.667</td>
+<td class='factor'>35.662</td>
 <td class='likes'>2.951</td>
 <td class='comments'>235</td>
 <td class='publicado'>7 días, 21 horas</td>
@@ -329,7 +404,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=Jy0YXF0kJWo'>Los pimpinelas de La Plaza Fragela</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>220.273</td>
-<td class='factor'>28.102</td>
+<td class='factor'>28.099</td>
 <td class='likes'>2.181</td>
 <td class='comments'>300</td>
 <td class='publicado'>7 días, 20 horas</td>
@@ -340,7 +415,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=aFanpPSpwAE'>Por si acaso .... Las precavidas</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>183.666</td>
-<td class='factor'>31.775</td>
+<td class='factor'>31.769</td>
 <td class='likes'>2.089</td>
 <td class='comments'>124</td>
 <td class='publicado'>5 días, 18 horas</td>
@@ -351,18 +426,18 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=uqp1tNqwpzk'>Que sea lo que Dios quiera</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>153.352</td>
-<td class='factor'>31.860</td>
+<td class='factor'>31.854</td>
 <td class='likes'>1.702</td>
 <td class='comments'>105</td>
 <td class='publicado'>4 días, 19 horas</td>
-<td class='puntuacion'>65,66</td>
+<td class='puntuacion'>65,65</td>
 </tr>
 <tr>
 <td>7</td>
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=-q5IM2YXSIY'>Cariño.... qué pelusilla me tienes</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>173.388</td>
-<td class='factor'>17.732</td>
+<td class='factor'>17.730</td>
 <td class='likes'>2.500</td>
 <td class='comments'>141</td>
 <td class='publicado'>9 días, 18 horas</td>
@@ -373,7 +448,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=NbYS5gt5C2c'>Cuando tú vas yo vengo</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>143.488</td>
-<td class='factor'>16.083</td>
+<td class='factor'>16.081</td>
 <td class='likes'>1.500</td>
 <td class='comments'>108</td>
 <td class='publicado'>8 días, 22 horas</td>
@@ -384,7 +459,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=oIB6AMdRXBU'>Los inhumanos</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>105.544</td>
-<td class='factor'>11.894</td>
+<td class='factor'>11.892</td>
 <td class='likes'>1.110</td>
 <td class='comments'>128</td>
 <td class='publicado'>8 días, 20 horas</td>
@@ -395,7 +470,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=HHyq1aIbztk'>Los que tienen el cielo ganao</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>46.336</td>
-<td class='factor'>16.428</td>
+<td class='factor'>16.422</td>
 <td class='likes'>235</td>
 <td class='comments'>30</td>
 <td class='publicado'>2 días, 19 horas</td>
@@ -406,7 +481,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=lW8N64VhFNA'>5 minutitos más</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>45.616</td>
-<td class='factor'>7.757</td>
+<td class='factor'>7.756</td>
 <td class='likes'>464</td>
 <td class='comments'>21</td>
 <td class='publicado'>5 días, 21 horas</td>
@@ -417,7 +492,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=puZXJ3rvjb0'>Cádiz de la frontera</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>35.679</td>
-<td class='factor'>9.382</td>
+<td class='factor'>9.380</td>
 <td class='likes'>270</td>
 <td class='comments'>63</td>
 <td class='publicado'>3 días, 19 horas</td>
@@ -450,7 +525,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=mY7ti1A7pZk'>Los cabecita loca</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>43.788</td>
-<td class='factor'>4.431</td>
+<td class='factor'>4.430</td>
 <td class='likes'>396</td>
 <td class='comments'>30</td>
 <td class='publicado'>9 días, 21 horas</td>
@@ -461,7 +536,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=Czd335guXEY'>Voces esmayadas</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>30.209</td>
-<td class='factor'>6.198</td>
+<td class='factor'>6.197</td>
 <td class='likes'>269</td>
 <td class='comments'>43</td>
 <td class='publicado'>4 días, 20 horas</td>
@@ -472,7 +547,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=Ac4tInxaGgc'>Que de gente muere por Cai</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>26.626</td>
-<td class='factor'>6.841</td>
+<td class='factor'>6.839</td>
 <td class='likes'>170</td>
 <td class='comments'>21</td>
 <td class='publicado'>3 días, 21 horas</td>
@@ -483,7 +558,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=UROmJLx3zGM'>Los Malfo</a></td>
 <td class='fase'>llados (una fucking chirigota)</td>
 <td class='visitas'>31.128</td>
-<td class='factor'>4.521</td>
+<td class='factor'>4.520</td>
 <td class='likes'>372</td>
 <td class='comments'>46</td>
 <td class='publicado'>6 días, 21 horas</td>
@@ -494,7 +569,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=JyOEhWiAbgE'>Martín el encantador</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>14.771</td>
-<td class='factor'>5.146</td>
+<td class='factor'>5.144</td>
 <td class='likes'>117</td>
 <td class='comments'>72</td>
 <td class='publicado'>2 días, 20 horas</td>
@@ -516,11 +591,11 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=WChd6fuw47w'>Las anticuarias</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>21.843</td>
-<td class='factor'>2.809</td>
+<td class='factor'>2.808</td>
 <td class='likes'>149</td>
 <td class='comments'>15</td>
 <td class='publicado'>7 días, 18 horas</td>
-<td class='puntuacion'>8,21</td>
+<td class='puntuacion'>8,20</td>
 </tr>
 <tr>
 <td>22</td>
@@ -563,18 +638,18 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=zpAP3fNLL5Q'>Las ratas</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>299.499</td>
-<td class='factor'>78.083</td>
+<td class='factor'>78.062</td>
 <td class='likes'>3.681</td>
 <td class='comments'>769</td>
 <td class='publicado'>3 días, 20 horas</td>
-<td class='puntuacion'>143,27</td>
+<td class='puntuacion'>143,25</td>
 </tr>
 <tr>
 <td>2</td>
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=A8lJkL3i8vw'>La tribu</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>249.321</td>
-<td class='factor'>42.951</td>
+<td class='factor'>42.943</td>
 <td class='likes'>2.258</td>
 <td class='comments'>448</td>
 <td class='publicado'>5 días, 19 horas</td>
@@ -585,7 +660,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=aGXdeGWhhGk'>La resistencia</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>117.093</td>
-<td class='factor'>14.993</td>
+<td class='factor'>14.991</td>
 <td class='likes'>1.103</td>
 <td class='comments'>128</td>
 <td class='publicado'>7 días, 19 horas</td>
@@ -607,29 +682,29 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=loEI4Cm17mY'>La valla</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>23.355</td>
-<td class='factor'>12.551</td>
+<td class='factor'>12.544</td>
 <td class='likes'>467</td>
 <td class='comments'>150</td>
 <td class='publicado'>1 días, 20 horas</td>
-<td class='puntuacion'>20,16</td>
+<td class='puntuacion'>20,15</td>
 </tr>
 <tr>
 <td>6</td>
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=8KveZV24teE'>¡Payaso!</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>26.309</td>
-<td class='factor'>9.253</td>
+<td class='factor'>9.250</td>
 <td class='likes'>270</td>
 <td class='comments'>27</td>
 <td class='publicado'>2 días, 20 horas</td>
-<td class='puntuacion'>15,98</td>
+<td class='puntuacion'>15,97</td>
 </tr>
 <tr>
 <td>7</td>
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=4GYG18YrRmM'>La majadería</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>22.848</td>
-<td class='factor'>8.188</td>
+<td class='factor'>8.185</td>
 <td class='likes'>247</td>
 <td class='comments'>17</td>
 <td class='publicado'>2 días, 18 horas</td>
@@ -640,7 +715,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=zmu25ZqHPf8'>Las carmelas</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>13.628</td>
-<td class='factor'>7.629</td>
+<td class='factor'>7.625</td>
 <td class='likes'>180</td>
 <td class='comments'>22</td>
 <td class='publicado'>1 días, 18 horas</td>
@@ -673,7 +748,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=CWySBSHLp_Q'>Las perras</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>20.746</td>
-<td class='factor'>3.024</td>
+<td class='factor'>3.023</td>
 <td class='likes'>237</td>
 <td class='comments'>24</td>
 <td class='publicado'>6 días, 20 horas</td>
@@ -695,7 +770,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=8-dI9BQbh_8'>Carnavalandia</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>17.915</td>
-<td class='factor'>3.058</td>
+<td class='factor'>3.057</td>
 <td class='likes'>182</td>
 <td class='comments'>29</td>
 <td class='publicado'>5 días, 20 horas</td>
@@ -717,7 +792,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=WO1Q2HGO3jI'>Los charlatanes</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>11.193</td>
-<td class='factor'>2.897</td>
+<td class='factor'>2.896</td>
 <td class='likes'>144</td>
 <td class='comments'>11</td>
 <td class='publicado'>3 días, 20 horas</td>
@@ -739,7 +814,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=yEm3xyFV__w'>Los hijos del cañaveral</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>15.144</td>
-<td class='factor'>1.537</td>
+<td class='factor'>1.536</td>
 <td class='likes'>179</td>
 <td class='comments'>9</td>
 <td class='publicado'>9 días, 20 horas</td>
@@ -750,7 +825,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=MYVss1lh_S0'>Donde los sueños se hacen realidad</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>9.665</td>
-<td class='factor'>2.017</td>
+<td class='factor'>2.016</td>
 <td class='likes'>154</td>
 <td class='comments'>19</td>
 <td class='publicado'>4 días, 19 horas</td>
@@ -783,11 +858,11 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=fHvCl2FGIeM'>Los plumeritos</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>7.217</td>
-<td class='factor'>2.492</td>
+<td class='factor'>2.491</td>
 <td class='likes'>94</td>
 <td class='comments'>12</td>
 <td class='publicado'>2 días, 21 horas</td>
-<td class='puntuacion'>5,50</td>
+<td class='puntuacion'>5,49</td>
 </tr>
 <tr>
 <td>22</td>
@@ -805,7 +880,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=0PhNH5iRQl8'>El gran comandante</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>5.363</td>
-<td class='factor'>2.838</td>
+<td class='factor'>2.837</td>
 <td class='likes'>54</td>
 <td class='comments'>13</td>
 <td class='publicado'>1 días, 21 horas</td>
@@ -863,7 +938,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=VssvvWfPShM'>La desafinada</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>6.976</td>
-<td class='factor'>1.783</td>
+<td class='factor'>1.782</td>
 <td class='likes'>99</td>
 <td class='comments'>6</td>
 <td class='publicado'>3 días, 21 horas</td>
@@ -874,7 +949,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=fx5ngIIuSPM'>Ley natura</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>6.310</td>
-<td class='factor'>2.163</td>
+<td class='factor'>2.162</td>
 <td class='likes'>70</td>
 <td class='comments'>4</td>
 <td class='publicado'>2 días, 22 horas</td>
@@ -885,11 +960,11 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=DUYp5pCUWqM'>El Grimorio</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>4.207</td>
-<td class='factor'>2.195</td>
+<td class='factor'>2.194</td>
 <td class='likes'>50</td>
 <td class='comments'>2</td>
 <td class='publicado'>1 días, 22 horas</td>
-<td class='puntuacion'>4,33</td>
+<td class='puntuacion'>4,32</td>
 </tr>
 <tr>
 <td>5</td>
@@ -943,7 +1018,7 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=xYWGpd-NnNs'>Ku klux klan klan</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>139.973</td>
-<td class='factor'>15.831</td>
+<td class='factor'>15.829</td>
 <td class='likes'>1.743</td>
 <td class='comments'>220</td>
 <td class='publicado'>8 días, 20 horas</td>
@@ -954,11 +1029,11 @@ td {
 <td class='agrupacion-link'><a href='https://www.youtube.com/watch?v=F9xqv32in_A'>O.N.G.(Organización No Gaditana) Cuartetos sin fronteras</a></td>
 <td class='fase'>Preliminares</td>
 <td class='visitas'>30.312</td>
-<td class='factor'>16.540</td>
+<td class='factor'>16.531</td>
 <td class='likes'>149</td>
 <td class='comments'>189</td>
-<td class='publicado'>1 días, 19 horas</td>
-<td class='puntuacion'>24,10</td>
+<td class='publicado'>1 días, 20 horas</td>
+<td class='puntuacion'>24,09</td>
 </tr>
 </tbody>
 </table>
