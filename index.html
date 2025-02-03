@@ -411,7 +411,7 @@
 <header class='cabecera-unificada'>
 <div class='contenido-cabecera'>
 <h1 class='titulo-principal'>El auténtico jurado popular</h1>
-<p style='color: var(--text-on-header); opacity: 0.9;'>Actualizado: 04/02/2025 00:33</p>
+<p style='color: var(--text-on-header); opacity: 0.9;'>Actualizado: 04/02/2025 00:47</p>
 <nav class='menu-principal'>
 <a href='#modalidad_chirigota' class='opcion-menu'>Chirigota</a>
 <a href='#modalidad_comparsa' class='opcion-menu'>Comparsa</a>
@@ -1339,10 +1339,10 @@ function sortTable(header, columnIndex) {
         let cellA = rowA.cells[columnIndex].textContent.trim();
         let cellB = rowB.cells[columnIndex].textContent.trim();
 
-        let valueA = parseFloat(cellA.replace(/,/g, '')) || 0;
-        let valueB = parseFloat(cellB.replace(/,/g, '')) || 0;
+        let valueA = BigInt(cellA.replace(/[^0-9]/g, '') || 0);
+        let valueB = BigInt(cellB.replace(/[^0-9]/g, '') || 0);
 
-        return isAscending ? valueA - valueB : valueB - valueA;
+        return isAscending ? (valueA > valueB ? 1 : -1) : (valueA < valueB ? 1 : -1);
     });
 
     tbody.innerHTML = '';
