@@ -18,411 +18,411 @@
 <title>El auténtico jurado popular</title>
 <style>
 
-        :root {
-            --primary: #2563eb;
-            --secondary: #7c3aed;
-            --header-background: linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%);
-            --surface: #ffffff;
-            --surface-accent: #f8fafc;
-            --text: #111827;
-            --text-secondary: #4b5563;
-            --text-on-header: #f3f4f6;
-            --border: #e5e7eb;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --header-background: linear-gradient(135deg, #1e1b4b 0%, #2e1065 100%);
-                --surface: #1a1a1a;
-                --surface-accent: #2d2d2d;
-                --text: #f3f4f6;
-                --text-secondary: #9ca3af;
-                --text-on-header: #e5e7eb;
-                --border: #374151;
-            }
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 180px;
-            font-size: 16px;
-        }
-        
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--surface);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        .cabecera-unificada {
-            background: var(--header-background);
-            color: var(--text-on-header);
-            border-bottom: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        .contenido-cabecera {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem 1rem 1rem;
-        }
-        
-        .titulo-principal {
-            font-size: clamp(1.75rem, 5vw, 2.75rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, #93c5fd, #c4b5fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-        
-        .menu-principal {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            padding-bottom: 0.5rem;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        
-        .menu-principal::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .opcion-menu {
-            color: var(--text-on-header);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 0;
-            position: relative;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            font-size: 0.95rem;
-        }
-        
-        .opcion-menu::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--text-on-header);
-            transition: width 0.3s ease;
-        }
-        
-        .opcion-menu:hover::after,
-        .opcion-menu:active::after {
-            width: 100%;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 220px auto 2rem;
-            padding: 0 1rem;
-        }
-        
-        .categoria {
-            margin-bottom: 3rem;
-            scroll-margin-top: 20px;
-        }
-        
-        .categoria-header {
-            background: var(--surface-accent);
-            padding: 1.5rem;
-            border-radius: 0.75rem 0.75rem 0 0;
-            margin-bottom: 0;
-            border-bottom: 2px solid var(--primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .categoria-header h2 {
-            color: var(--primary);
-            font-size: clamp(1.25rem, 4vw, 1.5rem);
-            font-weight: 700;
-            letter-spacing: -0.015em;
-            margin: 0;
-        }
-        
-        .stats-badge {
-            background: var(--primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-        
-        .table-wrapper {
-            background: var(--surface);
-            border-radius: 0 0 0.75rem 0.75rem;
-            box-shadow: var(--shadow);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border: 1px solid var(--border);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-        }
-        
-        th {
-            background: var(--surface-accent);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-            color: var(--primary);
-            padding: 1.25rem 1rem;
-            border-bottom: 1px solid var(--border);
-            position: relative;
-            white-space: nowrap;
-        }
-        
-        th .icono-orden {
-            margin-left: 5px;
-            font-size: 1.1rem;
-        }
-        
-        td {
-            padding: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem; /* Tamaño base para todas las celdas */
-        }
-        
-        tr:not(:last-child) td {
-            border-bottom: 1px solid var(--border);
-        }
-        
-        tr:hover {
-            background: color-mix(in srgb, var(--primary) 8%, transparent);
-        }
-        
-        .orden {
-            font-weight: 600;
-            color: var(--primary);
-            width: 4rem;
-            text-align: center;
-        }
-        
-        .visitas {
-            font-family: 'SF Mono', 'Cascadia Code', Consolas, monospace;
-            color: var(--primary);
-            font-weight: 500;
-            font-size: 0.95rem; /* Igualamos el tamaño */
-        }
-        
-        .factor, .puntuacion, .likes, .comments, .publicado, .fase {
-            text-align: center;
-            font-size: 0.95rem; /* Igualamos el tamaño */
-        }
-        
-        .factor {
-            font-family: 'SF Mono', 'Cascadia Code', Consolas, monospace;
-            color: var(--secondary);
-            font-weight: 500;
-        }
-        
-        .agrupacion-link {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        
-        .agrupacion-link a {
-            font-size: 0.95rem; /* Igualamos el tamaño */
-            color: inherit;
-            text-decoration: none;
-        }
-        .agrupacion-link a::after {
-            content: " ↗";
-            font-size: 0.85em;
-            opacity: 0.7;
-        }
-        
-        .agrupacion-link:hover {
-            color: var(--primary);
-        }
-        /* Estilos para desktop */
-        @media (min-width: 769px) {
-            table {
-                min-width: 800px;
-            }
-            
-            th {
-                background: var(--surface-accent);
-                font-weight: 700;
-                text-transform: uppercase;
-                font-size: 0.75rem;
-                letter-spacing: 0.05em;
-                color: var(--primary);
-                padding: 1.25rem 1rem;
-                border-bottom: 1px solid var(--border);
-                position: relative;
-                white-space: nowrap;
-            }
-        
-            td {
-                padding: 1rem;
-                color: var(--text-secondary);
-                border-bottom: 1px solid var(--border);
-            }
-        }
-        
-        /* Estilos para móvil */
-        @media (max-width: 768px) {
-            .table-wrapper {
-                border: none;
-                box-shadow: none;
-            }
-        
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-        
-            thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-        
-            tr {
-                background: var(--surface);
-                border: 1px solid var(--border);
-                border-radius: 0.75rem;
-                margin-bottom: 1rem;
-                padding: 1rem;
-                box-shadow: var(--shadow);
-            }
-        
-            td {
-                position: relative;
-                padding: 0.5rem 0;
-                padding-left: 40%;
-                text-align: right;
-                border: none;
-            }
-        
-            td:before {
-                content: attr(data-label);
-                position: absolute;
-                left: 0;
-                width: 35%;
-                padding-right: 1rem;
-                text-align: left;
-                font-weight: 600;
-                color: var(--primary);
-            }
-        
-            td.agrupacion-link {
-                padding-left: 0;
-                text-align: left;
-                font-size: 1.1rem;
-                font-weight: 600;
-                color: var(--text);
-                margin-bottom: 0.5rem;
-            }
-        
-            td.agrupacion-link a {
-                color: var(--text);
-                text-decoration: none;
-            }
-        
-            td.fase {
-                color: var(--text-secondary);
-                font-size: 0.9rem;
-            }
-            td.puntuacion {
-                font-weight: bold; /* Negrita para la puntuación */
-            }
-        
-            .visitas, .factor, .likes, .comments, .publicado, .puntuacion {
-                font-size: 0.9rem;
-                text-align: center;
-            }
-        }
-        @media (max-width: 1024px) and (orientation: landscape) {
-            /* Cambiar la posición fija de la cabecera */
-            .cabecera-unificada {
-                position: relative !important; /* Quitar el fixed */
-                top: auto !important; /* Restablecer cualquier desplazamiento */
-                width: 100% !important; /* Asegurarse que ocupe todo el ancho */
-                z-index: 0 !important; /* Reducir z-index para evitar problemas de superposición */
-            }
-        
-            /* Estilo de la cabecera */
-            .contenido-cabecera {
-                padding: 0.5rem 1rem; /* Reducir el padding para ahorrar espacio */
-            }
-            .container {
-                margin-top: 20px; /* Ajusta el valor según sea necesario */
-            }
-            /* Reducir el tamaño del título */
-            .titulo-principal {
-                font-size: 1.25rem !important; /* Reducir tamaño de fuente */
-            }
-        
-            /* Reducir espacio entre los elementos del menú */
-            .menu-principal {
-                gap: 0.75rem !important; /* Reducir el gap entre elementos */
-            }
-            .sticky-header {
-                position: sticky;
-                top: 0;
-                z-index: 1;
-                background: var(--surface-accent); /* O el color de fondo que prefieras */
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Para agregar una sombra al fijar la cabecera */
-            }
-            .table-wrapper { /* Asegurar que el contenedor de la tabla tenga altura para el scroll */
-                    overflow-y: auto; /* Permitir scroll vertical dentro del contenedor de la tabla */
-                    max-height: 80vh; /* Altura máxima para evitar que la tabla ocupe toda la pantalla */
-            }
-        
-            table {
-                display: block; /* Asegurar que la tabla se comporte como un bloque */
-            }
-        
-            thead {
-                position: sticky; /* Fijar la cabecera de la tabla */
-                top: 0; /* Pegar la cabecera a la parte superior del contenedor */
-                background-color: var(--surface-accent); /* Color de fondo para la cabecera fija */
-                z-index: 1; /* Asegurar que la cabecera esté por encima del contenido de la tabla */
-            }
-        
-        }
-        
+                    :root {
+                        --primary: #2563eb;
+                        --secondary: #7c3aed;
+                        --header-background: linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%);
+                        --surface: #ffffff;
+                        --surface-accent: #f8fafc;
+                        --text: #111827;
+                        --text-secondary: #4b5563;
+                        --text-on-header: #f3f4f6;
+                        --border: #e5e7eb;
+                        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+                    }
+                    
+                    @media (prefers-color-scheme: dark) {
+                        :root {
+                            --header-background: linear-gradient(135deg, #1e1b4b 0%, #2e1065 100%);
+                            --surface: #1a1a1a;
+                            --surface-accent: #2d2d2d;
+                            --text: #f3f4f6;
+                            --text-secondary: #9ca3af;
+                            --text-on-header: #e5e7eb;
+                            --border: #374151;
+                        }
+                    }
+                    
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        -webkit-tap-highlight-color: transparent;
+                    }
+                    
+                    html {
+                        scroll-behavior: smooth;
+                        scroll-padding-top: 180px;
+                        font-size: 16px;
+                    }
+                    
+                    body {
+                        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                        background-color: var(--surface);
+                        color: var(--text);
+                        line-height: 1.6;
+                        overflow-x: hidden;
+                    }
+                    
+                    .cabecera-unificada {
+                        background: var(--header-background);
+                        color: var(--text-on-header);
+                        border-bottom: 1px solid var(--border);
+                        box-shadow: var(--shadow);
+                        position: fixed;
+                        top: 0;
+                        width: 100%;
+                        z-index: 1000;
+                    }
+                    
+                    .contenido-cabecera {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        padding: 1.5rem 1rem 1rem;
+                    }
+                    
+                    .titulo-principal {
+                        font-size: clamp(1.75rem, 5vw, 2.75rem);
+                        font-weight: 800;
+                        letter-spacing: -0.03em;
+                        margin-bottom: 0.5rem;
+                        background: linear-gradient(45deg, #93c5fd, #c4b5fd);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        line-height: 1.2;
+                    }
+                    
+                    .menu-principal {
+                        display: flex;
+                        gap: 1.5rem;
+                        margin-top: 1.5rem;
+                        padding-bottom: 0.5rem;
+                        overflow-x: auto;
+                        -webkit-overflow-scrolling: touch;
+                        scrollbar-width: none;
+                        -ms-overflow-style: none;
+                    }
+                    
+                    .menu-principal::-webkit-scrollbar {
+                        display: none;
+                    }
+                    
+                    .opcion-menu {
+                        color: var(--text-on-header);
+                        text-decoration: none;
+                        font-weight: 500;
+                        padding: 0.5rem 0;
+                        position: relative;
+                        transition: all 0.2s ease;
+                        white-space: nowrap;
+                        font-size: 0.95rem;
+                    }
+                    
+                    .opcion-menu::after {
+                        content: '';
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 0;
+                        height: 2px;
+                        background: var(--text-on-header);
+                        transition: width 0.3s ease;
+                    }
+                    
+                    .opcion-menu:hover::after,
+                    .opcion-menu:active::after {
+                        width: 100%;
+                    }
+                    
+                    .container {
+                        max-width: 1200px;
+                        margin: 220px auto 2rem;
+                        padding: 0 1rem;
+                    }
+                    
+                    .categoria {
+                        margin-bottom: 3rem;
+                        scroll-margin-top: 20px;
+                    }
+                    
+                    .categoria-header {
+                        background: var(--surface-accent);
+                        padding: 1.5rem;
+                        border-radius: 0.75rem 0.75rem 0 0;
+                        margin-bottom: 0;
+                        border-bottom: 2px solid var(--primary);
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        gap: 1rem;
+                    }
+                    
+                    .categoria-header h2 {
+                        color: var(--primary);
+                        font-size: clamp(1.25rem, 4vw, 1.5rem);
+                        font-weight: 700;
+                        letter-spacing: -0.015em;
+                        margin: 0;
+                    }
+                    
+                    .stats-badge {
+                        background: var(--primary);
+                        color: white;
+                        padding: 0.5rem 1rem;
+                        border-radius: 9999px;
+                        font-size: 0.875rem;
+                        font-weight: 500;
+                    }
+                    
+                    .table-wrapper {
+                        background: var(--surface);
+                        border-radius: 0 0 0.75rem 0.75rem;
+                        box-shadow: var(--shadow);
+                        overflow-x: auto;
+                        -webkit-overflow-scrolling: touch;
+                        border: 1px solid var(--border);
+                    }
+                    
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        font-size: 0.95rem;
+                    }
+                    
+                    th {
+                        background: var(--surface-accent);
+                        font-weight: 700;
+                        text-transform: uppercase;
+                        font-size: 0.75rem;
+                        letter-spacing: 0.05em;
+                        color: var(--primary);
+                        padding: 1.25rem 1rem;
+                        border-bottom: 1px solid var(--border);
+                        position: relative;
+                        white-space: nowrap;
+                    }
+                    
+                    th .icono-orden {
+                        margin-left: 5px;
+                        font-size: 1.1rem;
+                    }
+                    
+                    td {
+                        padding: 1rem;
+                        color: var(--text-secondary);
+                        font-size: 0.95rem; /* Tamaño base para todas las celdas */
+                    }
+                    
+                    tr:not(:last-child) td {
+                        border-bottom: 1px solid var(--border);
+                    }
+                    
+                    tr:hover {
+                        background: color-mix(in srgb, var(--primary) 8%, transparent);
+                    }
+                    
+                    .orden {
+                        font-weight: 600;
+                        color: var(--primary);
+                        width: 4rem;
+                        text-align: center;
+                    }
+                    
+                    .visitas {
+                        font-family: 'SF Mono', 'Cascadia Code', Consolas, monospace;
+                        color: var(--primary);
+                        font-weight: 500;
+                        font-size: 0.95rem; /* Igualamos el tamaño */
+                    }
+                    
+                    .factor, .puntuacion, .likes, .comments, .publicado, .fase {
+                        text-align: center;
+                        font-size: 0.95rem; /* Igualamos el tamaño */
+                    }
+                    
+                    .factor {
+                        font-family: 'SF Mono', 'Cascadia Code', Consolas, monospace;
+                        color: var(--secondary);
+                        font-weight: 500;
+                    }
+                    
+                    .agrupacion-link {
+                        color: var(--text);
+                        text-decoration: none;
+                        font-weight: 500;
+                        transition: color 0.2s ease;
+                    }
+                    
+                    .agrupacion-link a {
+                        font-size: 0.95rem; /* Igualamos el tamaño */
+                        color: inherit;
+                        text-decoration: none;
+                    }
+                    .agrupacion-link a::after {
+                        content: " ↗";
+                        font-size: 0.85em;
+                        opacity: 0.7;
+                    }
+                    
+                    .agrupacion-link:hover {
+                        color: var(--primary);
+                    }
+                    /* Estilos para desktop */
+                    @media (min-width: 769px) {
+                        table {
+                            min-width: 800px;
+                        }
+                        
+                        th {
+                            background: var(--surface-accent);
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            font-size: 0.75rem;
+                            letter-spacing: 0.05em;
+                            color: var(--primary);
+                            padding: 1.25rem 1rem;
+                            border-bottom: 1px solid var(--border);
+                            position: relative;
+                            white-space: nowrap;
+                        }
+                    
+                        td {
+                            padding: 1rem;
+                            color: var(--text-secondary);
+                            border-bottom: 1px solid var(--border);
+                        }
+                    }
+                    
+                    /* Estilos para móvil */
+                    @media (max-width: 768px) {
+                        .table-wrapper {
+                            border: none;
+                            box-shadow: none;
+                        }
+                    
+                        table, thead, tbody, th, td, tr {
+                            display: block;
+                        }
+                    
+                        thead tr {
+                            position: absolute;
+                            top: -9999px;
+                            left: -9999px;
+                        }
+                    
+                        tr {
+                            background: var(--surface);
+                            border: 1px solid var(--border);
+                            border-radius: 0.75rem;
+                            margin-bottom: 1rem;
+                            padding: 1rem;
+                            box-shadow: var(--shadow);
+                        }
+                    
+                        td {
+                            position: relative;
+                            padding: 0.5rem 0;
+                            padding-left: 40%;
+                            text-align: right;
+                            border: none;
+                        }
+                    
+                        td:before {
+                            content: attr(data-label);
+                            position: absolute;
+                            left: 0;
+                            width: 35%;
+                            padding-right: 1rem;
+                            text-align: left;
+                            font-weight: 600;
+                            color: var(--primary);
+                        }
+                    
+                        td.agrupacion-link {
+                            padding-left: 0;
+                            text-align: left;
+                            font-size: 1.1rem;
+                            font-weight: 600;
+                            color: var(--text);
+                            margin-bottom: 0.5rem;
+                        }
+                    
+                        td.agrupacion-link a {
+                            color: var(--text);
+                            text-decoration: none;
+                        }
+                    
+                        td.fase {
+                            color: var(--text-secondary);
+                            font-size: 0.9rem;
+                        }
+                        td.puntuacion {
+                            font-weight: bold; /* Negrita para la puntuación */
+                        }
+                    
+                        .visitas, .factor, .likes, .comments, .publicado, .puntuacion {
+                            font-size: 0.9rem;
+                            text-align: center;
+                        }
+                    }
+                    @media (max-width: 1024px) and (orientation: landscape) {
+                        /* Cambiar la posición fija de la cabecera */
+                        .cabecera-unificada {
+                            position: relative !important; /* Quitar el fixed */
+                            top: auto !important; /* Restablecer cualquier desplazamiento */
+                            width: 100% !important; /* Asegurarse que ocupe todo el ancho */
+                            z-index: 0 !important; /* Reducir z-index para evitar problemas de superposición */
+                        }
+                    
+                        /* Estilo de la cabecera */
+                        .contenido-cabecera {
+                            padding: 0.5rem 1rem; /* Reducir el padding para ahorrar espacio */
+                        }
+                        .container {
+                            margin-top: 20px; /* Ajusta el valor según sea necesario */
+                        }
+                        /* Reducir el tamaño del título */
+                        .titulo-principal {
+                            font-size: 1.25rem !important; /* Reducir tamaño de fuente */
+                        }
+                    
+                        /* Reducir espacio entre los elementos del menú */
+                        .menu-principal {
+                            gap: 0.75rem !important; /* Reducir el gap entre elementos */
+                        }
+                        .sticky-header {
+                            position: sticky;
+                            top: 0;
+                            z-index: 1;
+                            background: var(--surface-accent); /* O el color de fondo que prefieras */
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Para agregar una sombra al fijar la cabecera */
+                        }
+                        .table-wrapper { /* Asegurar que el contenedor de la tabla tenga altura para el scroll */
+                                overflow-y: auto; /* Permitir scroll vertical dentro del contenedor de la tabla */
+                                max-height: 80vh; /* Altura máxima para evitar que la tabla ocupe toda la pantalla */
+                        }
+                    
+                        table {
+                            display: block; /* Asegurar que la tabla se comporte como un bloque */
+                        }
+                    
+                        thead {
+                            position: sticky; /* Fijar la cabecera de la tabla */
+                            top: 0; /* Pegar la cabecera a la parte superior del contenedor */
+                            background-color: var(--surface-accent); /* Color de fondo para la cabecera fija */
+                            z-index: 1; /* Asegurar que la cabecera esté por encima del contenido de la tabla */
+                        }
+                    
+                    }
+                    
 </style>
 </head>
 <body>
 <header class='cabecera-unificada'>
 <div class='contenido-cabecera'>
 <h1 class='titulo-principal'>El auténtico jurado popular</h1>
-<p style='color: var(--text-on-header); opacity: 0.9;'>Actualizado: 05/02/2025 11:30</p>
+<p style='color: var(--text-on-header); opacity: 0.9;'>Actualizado: 05/02/2025 13:16</p>
 <nav class='menu-principal'>
 <a href='#modalidad_chirigota' class='opcion-menu'>Chirigota</a>
 <a href='#modalidad_comparsa' class='opcion-menu'>Comparsa</a>
@@ -1404,39 +1404,39 @@
 </div>
 <script>
 
-            function sortTable(header, columnIndex) {
-                let table = header.closest('table');
-                let tbody = table.querySelector('tbody');
-                let rows = Array.from(tbody.querySelectorAll('tr'));
-            
-                let isAscending = header.dataset.order === 'asc';
-                header.dataset.order = isAscending ? 'desc' : 'asc';
-            
-                rows.sort((rowA, rowB) => {
-                    let cellA = rowA.cells[columnIndex].textContent.trim();
-                    let cellB = rowB.cells[columnIndex].textContent.trim();
-            
-                    let valueA = BigInt(cellA.replace(/[^0-9]/g, '') || 0);
-                    let valueB = BigInt(cellB.replace(/[^0-9]/g, '') || 0);
-            
-                    return isAscending ? (valueA > valueB ? 1 : -1) : (valueA < valueB ? 1 : -1);
-                });
-            
-                tbody.innerHTML = '';
-                rows.forEach(row => tbody.appendChild(row));
-            
-                document.querySelectorAll('th .icono-orden').forEach(icon => icon.innerHTML = '');
-            
-                let icono = header.querySelector('.icono-orden');
-                icono.innerHTML = isAscending ? '▲' : '▼';
-            }
-            
-            window.onload = () => {
-                let puntuacionHeader = document.querySelector('th:nth-child(9)');
-                puntuacionHeader.dataset.order = 'desc';
-                sortTable(puntuacionHeader, 8);
-            };
-            
+                    function sortTable(header, columnIndex) {
+                        let table = header.closest('table');
+                        let tbody = table.querySelector('tbody');
+                        let rows = Array.from(tbody.querySelectorAll('tr'));
+                    
+                        let isAscending = header.dataset.order === 'asc';
+                        header.dataset.order = isAscending ? 'desc' : 'asc';
+                    
+                        rows.sort((rowA, rowB) => {
+                            let cellA = rowA.cells[columnIndex].textContent.trim();
+                            let cellB = rowB.cells[columnIndex].textContent.trim();
+                    
+                            let valueA = BigInt(cellA.replace(/[^0-9]/g, '') || 0);
+                            let valueB = BigInt(cellB.replace(/[^0-9]/g, '') || 0);
+                    
+                            return isAscending ? (valueA > valueB ? 1 : -1) : (valueA < valueB ? 1 : -1);
+                        });
+                    
+                        tbody.innerHTML = '';
+                        rows.forEach(row => tbody.appendChild(row));
+                    
+                        document.querySelectorAll('th .icono-orden').forEach(icon => icon.innerHTML = '');
+                    
+                        let icono = header.querySelector('.icono-orden');
+                        icono.innerHTML = isAscending ? '▲' : '▼';
+                    }
+                    
+                    window.onload = () => {
+                        let puntuacionHeader = document.querySelector('th:nth-child(9)');
+                        puntuacionHeader.dataset.order = 'desc';
+                        sortTable(puntuacionHeader, 8);
+                    };
+                    
 </script>
 </body>
 </html>
